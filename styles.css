@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #b5e7ff; /* Fondo azul claro */
+    margin: 0;
+    padding: 0;
+    animation: changeColor 10s infinite alternate; /* Animación de cambio de color */
+    transition: background-color 0.5s ease; /* Animación de transición para el cambio de color */
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    height: 100vh; /* Establece la altura del cuerpo al 100% de la altura de la ventana */
+}
+
+@keyframes changeColor {
+    from {
+        background-color: #b5e7ff; /* Fondo azul claro */
+    }
+    to {
+        background-color: #ffe6b5; /* Fondo amarillo claro */
+    }
+}
+
+#cuestionario-container {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 1s ease; /* Animación de entrada al cargar */
+}
+
+#pregunta {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#respuestas-container {
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    display: flex;
+    flex-direction: column; /* Alinea las respuestas en columna */
+    align-items: center; /* Centra las respuestas horizontalmente */
+}
+
+.respuesta-btn {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #007bff; /* Botones de respuesta azules */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animación de transición para el cambio de color al pasar el mouse */
+}
+
+.respuesta-btn:hover {
+    background-color: #0056b3; /* Botones de respuesta azules más oscuros al pasar el mouse */
+}
+
+#next-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff; /* Botón de siguiente azul */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+    transition: background-color 0.3s ease; /* Animación de transición para el cambio de color al pasar el mouse */
+}
+
+#next-button:hover {
+    background-color: #0056b3; /* Botón de siguiente azul más oscuro al pasar el mouse */
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
