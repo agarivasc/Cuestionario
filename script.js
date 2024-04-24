@@ -50,12 +50,16 @@ document.addEventListener('DOMContentLoaded', function() {
             respuestas: ['Canadá', 'Estados Unidos', 'Brasil', 'Argentina'],
             correcta: 0
         },
-        // Agrega más preguntas aquí
+
     ];
-    
     let indiceActual = 0;
+    let respuestasCorrectas = 0; // Contador de respuestas correctas
+    let intervalo; // Variable para el temporizador
+    let tiempoRestante = 10; // Tiempo inicial del temporizador
+
     let btnSiguiente = document.getElementById('next-button');
     let respuestasContainer = document.getElementById('respuestas-container');
+    let tiempoMostrado = document.getElementById('tiempo-restante');
 
     function mostrarPregunta() {
         // Mostrar la pregunta
@@ -73,6 +77,20 @@ document.addEventListener('DOMContentLoaded', function() {
             respuestasContainer.appendChild(btn);
         });
 
+        // Mostrar el temporizador
+        tiempoMostrado.innerText = tiempoRestante;
+
+        // Comenzar temporizador
+        clearInterval(intervalo);
+        intervalo = setInterval(function() {
+            tiempoRestante--;
+            tiempoMostrado.innerText = tiempoRestante;
+            if (tiempoRestante <= 0) {
+                clearInterval(intervalo);
+                mostrarSiguientePregunta();
+            }
+        }, 1000);
+
         btnSiguiente.style.display = 'none';
         anime({
             targets: '#pregunta',
@@ -83,39 +101,57 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function verificarRespuesta(i) {
+        clearInterval(intervalo); // Detener el temporizador al responder
         if (i === preguntas[indiceActual].correcta) {
-            if (indiceActual < preguntas.length - 1) {
-                Swal.fire({
-                    title: '¡Correcto!',
-                    icon: 'success',
-                    confirmButtonText: 'Siguiente',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        indiceActual++;
-                        mostrarPregunta();
-                    }
-                });
-            } else {
-                Swal.fire({
-                    title: '¡Correcto!',
-                    text: '¡Has completado el cuestionario!',
-                    icon: 'success',
-                    confirmButtonText: 'Ok',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload(); // Recarga la página
-                    }
-                });
-            }
+            respuestasCorrectas++; // Incrementar contador de respuestas correctas
+        }
+
+        if (indiceActual < preguntas.length - 1) {
+            mostrarSiguientePregunta();
         } else {
             Swal.fire({
-                title: 'Incorrecto',
-                text: 'Intenta nuevamente.',
-                icon: 'error',
-                confirmButtonText: 'Cerrar'
+                title: '¡Fin del cuestionario!',
+                text: 'Respuestas correctas: ' + respuestasCorrectas + '/' + preguntas.length,
+                icon: 'info',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                Swal.fire({
+                    title: '¿Quieres reiniciar el cuestionario?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload(); // Recarga la página para reiniciar el cuestionario
+                    } else {
+                        Swal.fire({
+                            title: '¡Gracias por jugar!',
+                            icon: 'success',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            showConfirmButton: false,
+                        })
+                    }
+                });
             });
         }
     }
 
+    function mostrarSiguientePregunta() {
+        indiceActual++;
+        tiempoRestante = 10; // Reiniciar temporizador
+        mostrarPregunta();
+    }
+
+    function reiniciarCuestionario() {
+        indiceActual = 0;
+        respuestasCorrectas = 0;
+        mostrarPregunta();
+    }
+
     mostrarPregunta();
+     document.getElementById('reiniciar-button').addEventListener('click', function() {
+        location.reload(); // Recargar la página
+    });
 });

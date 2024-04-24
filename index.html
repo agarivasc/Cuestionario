@@ -5,13 +5,18 @@
     <title>Cuestionario Interactivo</title>
     <link rel="stylesheet" href="styles.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
 
-<div id="cuestionario-container" class="fadeIn">
-    <div id="pregunta" class="fadeInDown"></div>
-    <div id="respuestas-container" class="fadeInUp"></div>
-    <button id="next-button" style="display:none;" class="fadeIn"></button>
+<div id="cuestionario-container">
+    <div id="tiempo-restante"></div> <!-- Elemento para mostrar el temporizador -->
+    <br>
+    <div id="pregunta"></div>
+    <div id="respuestas-container"></div>
+    <button id="next-button" style="display:none;">Siguiente</button>
+    <button id="reiniciar-button">Reiniciar Formulario</button> <!-- Botón para reiniciar la página -->
+
 </div>
 
 <script src="script.js"></script>
